@@ -1,4 +1,4 @@
-CXXFLAGS += $(shell llvm-config --cxxflags)
+CXXFLAGS += $(shell llvm-config --cxxflags) -O2
 LIBS += $(shell llvm-config --libs)
 LDFLAGS += $(shell llvm-config --ldflags) -flto=thin 
 LDFLAGS += $(shell if command -v mold --version >/dev/null 2>&1; then echo "-fuse-ld=mold"; fi)
