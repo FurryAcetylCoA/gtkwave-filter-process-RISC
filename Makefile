@@ -1,4 +1,5 @@
-LDFLAGS += -fuse-ld=mold -lLLVM-16
+LDFLAGS += $(shell llvm-config --libs) -flto=thin 
+LDFLAGS += $(shell if command -v mold --version >/dev/null 2>&1; then echo "-fuse-ld=mold"; fi)
 SRCS = $(wildcard src/*.cpp)
 BUILDDIR = bin
 
