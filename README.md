@@ -18,6 +18,9 @@
 5) Select filter filename from list
 6) click OK
 
+> **_NOTE:_**  You can use *File ->Write save file* after applying this filter. This way, it will be applied automatically next time.
+
+
 ### Build dependency
 * LLVM >= 11 (tested on 16)
 * Clang++
