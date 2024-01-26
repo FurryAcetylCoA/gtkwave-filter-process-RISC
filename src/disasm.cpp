@@ -89,6 +89,7 @@ void init_disasm(std::string triple) {
                                       AsmInfo->getAssemblerDialect(), *AsmInfo,
                                       *gMII, *gMRI);
     gIP->setPrintImmHex(true);
+    gIP->applyTargetSpecificCLOption("no-aliases");
 }
 
 std::string disassemble(uint8_t *code) {
