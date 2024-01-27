@@ -12,8 +12,8 @@
 
 ### Usage 
 1) Highlight the signals you want filtered
-2) Edit->Data Format->Translate Filter File->Enable and Select
-3) Click Add Filter executable to List
+2) Edit->Data Format->Translate Filter Process->Enable and Select
+3) Click Add Proc Filter to List
 4) Open file
 5) **Select filter filename from list** $\color{red} {❗IMPORTANT❗} $
 6) click OK
