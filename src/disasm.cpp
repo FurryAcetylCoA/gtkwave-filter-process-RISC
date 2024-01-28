@@ -14,6 +14,9 @@
  * See the Mulan PSL v2 for more details.
  ***************************************************************************************/
 
+#include <sstream>
+#include <iomanip>
+
 #if defined(__GNUC__) && !defined(__clang__)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
@@ -92,12 +95,16 @@ void init_disasm(std::string triple) {
     gIP->applyTargetSpecificCLOption("no-aliases");
 }
 
-std::string disassemble(uint8_t *code) {
+std::string disassemble(uint64_t hx) {
+    uint8_t *code = reinterpret_cast<uint8_t *>(&hx);
     MCInst inst;
     llvm::ArrayRef<uint8_t> arr(code, 4);
     uint64_t dummy_size = 0, addr = 0;
-    gDisassembler->getInstruction(inst, dummy_size, arr, addr, llvm::nulls());
-
+    if(gDisassembler->getInstruction(inst, dummy_size, arr, addr, llvm::nulls()) != MCDisassembler::Success){
+        std::stringstream stream;
+        stream << "invalid inst:" << std::hex << hx;
+        return stream.str();
+    }
     std::string s;
     raw_string_ostream os(s);
     gIP->printInst(&inst, addr, "", *gSTI, os);
