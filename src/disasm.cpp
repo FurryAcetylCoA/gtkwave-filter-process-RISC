@@ -14,9 +14,6 @@
  * See the Mulan PSL v2 for more details.
  ***************************************************************************************/
 
-#include <sstream>
-#include <iomanip>
-
 #if defined(__GNUC__) && !defined(__clang__)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
@@ -100,13 +97,12 @@ std::string disassemble(uint64_t hx) {
     MCInst inst;
     llvm::ArrayRef<uint8_t> arr(code, 4);
     uint64_t dummy_size = 0, addr = 0;
-    if(gDisassembler->getInstruction(inst, dummy_size, arr, addr, llvm::nulls()) != MCDisassembler::Success){
-        std::stringstream stream;
-        stream << "invalid inst:" << std::hex << hx;
-        return stream.str();
-    }
     std::string s;
     raw_string_ostream os(s);
+    if(gDisassembler->getInstruction(inst, dummy_size, arr, addr, llvm::nulls()) != MCDisassembler::Success){
+        os << "invalid inst:" << llvm::format_hex_no_prefix(hx,8);
+        return s;
+    }
     gIP->printInst(&inst, addr, "", *gSTI, os);
 
     // Assume result format "\tOpName\tOperands"
