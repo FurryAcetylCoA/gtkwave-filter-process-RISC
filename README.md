@@ -8,7 +8,7 @@
 ![after](img/after.png)
 
 ### Support targets:
-* RISC-V 32/64 with M/A/C/F/D
+* RISC-V 32/64 with M/A/F/D
 
 ### Usage 
 1) Highlight the signals you want filtered

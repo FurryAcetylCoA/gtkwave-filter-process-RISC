@@ -70,7 +70,7 @@ void init_disasm(std::string triple) {
     if (isa == "riscv32" || isa == "riscv64") {
     	gSTI->ApplyFeatureFlag("+m");
     	gSTI->ApplyFeatureFlag("+a");
-    	gSTI->ApplyFeatureFlag("+c");
+    	// gSTI->ApplyFeatureFlag("+c");
     	gSTI->ApplyFeatureFlag("+f");
     	gSTI->ApplyFeatureFlag("+d");
     }
