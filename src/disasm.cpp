@@ -92,14 +92,17 @@ void init_disasm(std::string triple) {
     gIP->applyTargetSpecificCLOption("no-aliases");
 }
 
-std::string disassemble(uint8_t *code) {
+std::string disassemble(uint64_t hx) {
+    uint8_t *code = reinterpret_cast<uint8_t *>(&hx);
     MCInst inst;
     llvm::ArrayRef<uint8_t> arr(code, 4);
     uint64_t dummy_size = 0, addr = 0;
-    gDisassembler->getInstruction(inst, dummy_size, arr, addr, llvm::nulls());
-
     std::string s;
     raw_string_ostream os(s);
+    if(gDisassembler->getInstruction(inst, dummy_size, arr, addr, llvm::nulls()) != MCDisassembler::Success){
+        os << "invalid inst:" << llvm::format_hex_no_prefix(hx,8);
+        return s;
+    }
     gIP->printInst(&inst, addr, "", *gSTI, os);
 
     // Assume result format "\tOpName\tOperands"

@@ -24,7 +24,7 @@
 #define TARGET riscv32
 #endif
 
-std::string disassemble(uint8_t *code);
+std::string disassemble(uint64_t);
 void init_disasm(std::string triple);
 
 int main() {
@@ -34,7 +34,7 @@ int main() {
     while (std::cin >> buf) {
         std::istringstream iss(buf);
         iss >> std::hex >> hx;
-        ret_string = disassemble(reinterpret_cast<uint8_t *>(&hx));
+        ret_string = disassemble(hx);
         std::cout << ret_string << std::endl;
     }
     return 0;
