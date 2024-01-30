@@ -1,28 +1,25 @@
-CXXFLAGS += $(shell llvm-config --cxxflags) -O2
+CXX = clang++
+
+CXXFLAGS += $(shell llvm-config --cxxflags) -O3 -flto
 LIBS += $(shell llvm-config --libs)
 LDFLAGS += $(shell llvm-config --ldflags)
 LDFLAGS += $(shell if command -v mold --version >/dev/null 2>&1; then echo "-fuse-ld=mold"; fi)
 SRCS = $(wildcard src/*.cpp)
-FLAGS = $(CXXFLAGS) $(LDFLAGS) $(LIBS)
 BUILDDIR = bin
-CC = clang++
-
-ifeq ($(CC), clang++)
-	LDFLAGS += -flto=thin 
-endif
+FLAGS = $(CXXFLAGS) $(LDFLAGS) $(LIBS)
 
 all: $(BUILDDIR)/gtkwave-filter-rv64 $(BUILDDIR)/gtkwave-filter-rv32
 
 $(BUILDDIR)/gtkwave-filter-rv32: $(SRCS) | $(BUILDDIR)
-	@echo + CC "->" filter-32
-	@$(CC) $^ $(FLAGS) -o $@ -DTARGET="riscv32"
+	@echo + CXX "->" $@
+	$(CXX) $^ $(FLAGS) -o $@ -DTARGET="riscv32"
 
 $(BUILDDIR)/gtkwave-filter-rv64: $(SRCS) | $(BUILDDIR)
-	@echo + CC "->" filter-64
-	@$(CC) $^ $(FLAGS) -o $@ -DTARGET="riscv64"	
+	@echo + CXX "->" $@
+	$(CXX) $^ $(FLAGS) -o $@ -DTARGET="riscv64"
 
 $(BUILDDIR):
-	mkdir -p $(BUILDDIR)
+	@mkdir -p $(BUILDDIR)
 
 clean:
 	rm -rf $(BUILDDIR)
