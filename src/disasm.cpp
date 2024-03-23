@@ -72,9 +72,7 @@ void init_disasm(std::string triple) {
     	gSTI->ApplyFeatureFlag("+a");
     	// gSTI->ApplyFeatureFlag("+c");
     	gSTI->ApplyFeatureFlag("+f");
-    	gSTI->ApplyFeatureFlag("+d");
-    }else if(isa == "loongarch32"){
-
+        gSTI->ApplyFeatureFlag("+d");
     }
     gMII = target->createMCInstrInfo();
     gMRI = target->createMCRegInfo(triple);
@@ -91,7 +89,8 @@ void init_disasm(std::string triple) {
                                       AsmInfo->getAssemblerDialect(), *AsmInfo,
                                       *gMII, *gMRI);
     gIP->setPrintImmHex(true);
-    gIP->applyTargetSpecificCLOption("no-aliases");
+    if (isa == "riscv32" || isa == "riscv64")
+        gIP->applyTargetSpecificCLOption("no-aliases");
 }
 
 std::string disassemble(uint64_t hx) {
