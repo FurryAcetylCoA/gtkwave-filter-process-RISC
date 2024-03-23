@@ -73,6 +73,8 @@ void init_disasm(std::string triple) {
     	// gSTI->ApplyFeatureFlag("+c");
     	gSTI->ApplyFeatureFlag("+f");
     	gSTI->ApplyFeatureFlag("+d");
+    }else if(isa == "loongarch32"){
+
     }
     gMII = target->createMCInstrInfo();
     gMRI = target->createMCRegInfo(triple);
