@@ -1,4 +1,4 @@
-## Gtkwave filter process for RISC-V
+## Gtkwave filter process for RISC
 
 
 ### Before:
@@ -9,6 +9,7 @@
 
 ### Support targets:
 * RISC-V 32/64 with M/A/F/D
+* LoongArch32 reduce
 
 ### Usage 
 1) Highlight the signals you want filtered
