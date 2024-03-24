@@ -9,7 +9,7 @@
 
 ### Support targets:
 * RISC-V 32/64 with M/A/F/D
-* LoongArch32 reduce
+* LoongArch32
 
 ### Usage 
 1) Highlight the signals you want filtered
