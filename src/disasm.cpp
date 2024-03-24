@@ -23,6 +23,7 @@
 #include "llvm/MC/MCContext.h"
 #include "llvm/MC/MCDisassembler/MCDisassembler.h"
 #include "llvm/MC/MCInstPrinter.h"
+#include "llvm/Support/FormatVariadic.h"
 #if LLVM_VERSION_MAJOR >= 14
 #include "llvm/MC/TargetRegistry.h"
 #if LLVM_VERSION_MAJOR >= 15
@@ -40,6 +41,8 @@
 #if LLVM_VERSION_MAJOR < 11
 #error Please use LLVM with major version >= 11
 #endif
+
+#define DEBUG_DISPLAY true
 
 using namespace llvm;
 
@@ -91,6 +94,9 @@ void init_disasm(std::string triple) {
     gIP->setPrintImmHex(true);
     if (isa == "riscv32" || isa == "riscv64")
         gIP->applyTargetSpecificCLOption("no-aliases");
+    
+    if(isa == "mips" || isa == "mipsel")
+        gIP->applyTargetSpecificCLOption("no-aliases");
 }
 
 std::string disassemble(uint64_t hx) {
@@ -103,7 +109,12 @@ std::string disassemble(uint64_t hx) {
     if(gDisassembler->getInstruction(inst, dummy_size, arr, addr, llvm::nulls()) != MCDisassembler::Success){
         os << "invalid inst:" << llvm::format_hex_no_prefix(hx,8);
         return s;
-    }
+    }else if(DEBUG_DISPLAY){
+		llvm::errs() << "cursor inst: (HEX)" << llvm::format_hex_no_prefix(hx,8) << " ";
+		llvm::APInt hex_value(64, hx);
+		llvm::errs() << "(BIN)" << toString(hex_value,2,false) <<"\n";
+	}
+
     gIP->printInst(&inst, addr, "", *gSTI, os);
 
     // Assume result format "\tOpName\tOperands"

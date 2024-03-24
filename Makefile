@@ -8,7 +8,7 @@ SRCS = $(wildcard src/*.cpp)
 BUILDDIR = bin
 FLAGS = $(CXXFLAGS) $(LDFLAGS) $(LIBS)
 
-all: $(BUILDDIR)/gtkwave-filter-rv64 $(BUILDDIR)/gtkwave-filter-rv32 $(BUILDDIR)/gtkwave-filter-la32
+all: $(BUILDDIR)/gtkwave-filter-rv64 $(BUILDDIR)/gtkwave-filter-rv32 $(BUILDDIR)/gtkwave-filter-la32 $(BUILDDIR)/gtkwave-filter-mips32 $(BUILDDIR)/gtkwave-filter-mipsel32
 
 $(BUILDDIR)/gtkwave-filter-rv32: $(SRCS) | $(BUILDDIR)
 	@echo + CXX "->" $@
@@ -21,6 +21,14 @@ $(BUILDDIR)/gtkwave-filter-rv64: $(SRCS) | $(BUILDDIR)
 $(BUILDDIR)/gtkwave-filter-la32: $(SRCS) | $(BUILDDIR)
 	@echo + CXX "->" $@
 	$(CXX) $^ $(FLAGS) -o $@ -DTARGET="loongarch32"
+
+$(BUILDDIR)/gtkwave-filter-mips32: $(SRCS) | $(BUILDDIR)
+	@echo + CXX "->" $@
+	$(CXX) $^ $(FLAGS) -o $@ -DTARGET="mips"
+
+$(BUILDDIR)/gtkwave-filter-mipsel32: $(SRCS) | $(BUILDDIR)
+	@echo + CXX "->" $@
+	$(CXX) $^ $(FLAGS) -o $@ -DTARGET="mipsel"
 
 
 $(BUILDDIR):
