@@ -9,7 +9,7 @@
 
 ### Support targets:
 * RISC-V 32/64 with M/A/F/D
-* LoongArch32 (Require LLVM >= 16)
+* LoongArch32
 
 ### Usage 
 1) Highlight the signals you want filtered
@@ -23,9 +23,20 @@
 
 
 ### Build dependency
-* LLVM >= 11 (tested on 16)
+* LLVM >= 16
 * Clang++
 * Mold (optional)
 
 
-Pre-built binary can be found in release (built with LLVM-16)
+Pre-built binary can be found in release (built with LLVM-16 on Ubuntu 20.04)
+
+### Notice about Gtkwave freeze
+
+If you experience a freeze in Gtkwave after applying the pre-built
+filter binary from release
+
+Please install LLVM-16 or
+download `libLLVM-16.so` from release page and place it alongside the filter binary
+
+Please notice that the `libLLVM-16.so` provided on the release page is highly customized for
+this project in order to reduce it's size and is not suitable for any other use
