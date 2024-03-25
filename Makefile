@@ -1,6 +1,6 @@
 CXX = clang++
 
-CXXFLAGS += -O3 -flto
+CXXFLAGS += -O3 -flto -I/home/coa/tmp/capstone-next/include/
 LIBS += -Wl,-Bstatic -lm -lcapstone -Wl,-Bdynamic
 LDFLAGS += $(shell llvm-config --ldflags) -L.
 LDFLAGS += $(shell if command -v mold --version >/dev/null 2>&1; then echo "-fuse-ld=mold"; fi)
