@@ -4,6 +4,7 @@ CXXFLAGS += $(shell llvm-config --cxxflags) -O3 -flto
 LIBS += $(shell llvm-config --libs)
 LDFLAGS += $(shell llvm-config --ldflags)
 LDFLAGS += $(shell if command -v mold --version >/dev/null 2>&1; then echo "-fuse-ld=mold"; fi)
+LDFLAGS += -Wl,-rpath='$$ORIGIN'
 SRCS = $(wildcard src/*.cpp)
 BUILDDIR = bin
 FLAGS = $(CXXFLAGS) $(LDFLAGS) $(LIBS)
