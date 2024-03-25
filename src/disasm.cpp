@@ -22,7 +22,7 @@
 static csh handle;
 
 void init_disasm(std::string triple) {
-    cs_open(CS_ARCH_LOONGARCH, CS_MODE_RISCV32, &handle);
+    cs_open(CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH32, &handle);
 }
 
 std::string disassemble(uint64_t hx) {
