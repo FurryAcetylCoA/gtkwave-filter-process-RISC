@@ -8,7 +8,7 @@ SRCS = $(wildcard src/*.cpp)
 BUILDDIR = bin
 FLAGS = $(CXXFLAGS) $(LDFLAGS) $(LIBS)
 
-all: $(BUILDDIR)/gtkwave-filter-rv64 $(BUILDDIR)/gtkwave-filter-rv32 $(BUILDDIR)/gtkwave-filter-la32
+all: $(BUILDDIR)/gtkwave-filter-rv64 $(BUILDDIR)/gtkwave-filter-rv32 $(BUILDDIR)/gtkwave-filter-la32 
 
 $(BUILDDIR)/gtkwave-filter-rv32: $(SRCS) | $(BUILDDIR)
 	@echo + CXX "->" $@
