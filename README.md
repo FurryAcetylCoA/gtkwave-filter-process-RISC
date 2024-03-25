@@ -9,7 +9,7 @@
 
 ### Support targets:
 * RISC-V 32/64 with M/A/F/D
-* LoongArch32
+* LoongArch32 (Require LLVM >= 16)
 
 ### Usage 
 1) Highlight the signals you want filtered
