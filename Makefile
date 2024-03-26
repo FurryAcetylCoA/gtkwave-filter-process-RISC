@@ -1,6 +1,6 @@
 CXX = g++
 
-CXXFLAGS += -O0 -g -I/home/coa/tmp/capstone-next/include/
+CXXFLAGS += -O3 -I/home/coa/tmp/capstone-next/include/
 LIBS += -Wl,-Bstatic -lm -lcapstone -Wl,-Bdynamic
 # LDFLAGS += $(shell llvm-config --ldflags) -L.
 LDFLAGS += -L.
@@ -12,16 +12,16 @@ FLAGS = $(CXXFLAGS) $(LDFLAGS) $(LIBS)
 all: $(BUILDDIR)/gtkwave-filter-rv64 $(BUILDDIR)/gtkwave-filter-rv32 $(BUILDDIR)/gtkwave-filter-la32
 
 $(BUILDDIR)/gtkwave-filter-rv32: $(SRCS) | $(BUILDDIR)
-# 	@echo + CXX "->" $@
-# 	$(CXX) $^ $(FLAGS) -o $@ -DTARGET="riscv32"
+	@echo + CXX "->" $@
+	$(CXX) $^ $(FLAGS) -o $@ -DCSARCH=CS_ARCH_RISCV -DCSMODE=CS_MODE_RISCV32
 
 $(BUILDDIR)/gtkwave-filter-rv64: $(SRCS) | $(BUILDDIR)
-# 	@echo + CXX "->" $@
-# 	$(CXX) $^ $(FLAGS) -o $@ -DTARGET="riscv64"
+	@echo + CXX "->" $@
+	$(CXX) $^ $(FLAGS) -o $@ -DCSARCH=CS_ARCH_RISCV -DCSMODE=CS_MODE_RISCV64
 
 $(BUILDDIR)/gtkwave-filter-la32: $(SRCS) | $(BUILDDIR)
 	@echo + CXX "->" $@
-	$(CXX) $^ $(FLAGS) -o $@ -DTARGET="loongarch32"
+	$(CXX) $^ $(FLAGS) -o $@ -DCSARCH=CS_ARCH_LOONGARCH -DCSMODE=CS_MODE_LOONGARCH32
 
 
 $(BUILDDIR):

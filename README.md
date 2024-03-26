@@ -1,3 +1,6 @@
+This branch uses capstone instead of llvm to disassemble instructions
+offical support for loongarch in capstone is not merged yet
+
 ## Gtkwave filter process for RISC
 
 

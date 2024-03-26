@@ -22,7 +22,7 @@
 static csh handle;
 
 void init_disasm(std::string triple) {
-    cs_open(CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH32, &handle);
+    cs_open(CSARCH , CSMODE, &handle);
 }
 
 std::string disassemble(uint64_t hx) {
@@ -31,7 +31,8 @@ std::string disassemble(uint64_t hx) {
     std::ostringstream oss;
     int count = cs_disasm(handle, code, sizeof(uint32_t), 0, 1, &insn);
     if(!count){
-        std::cout<<"Failed";
+        oss<<"Failed";
+        return oss.str();
     }
 
     oss<<insn->mnemonic<<" "<<insn->op_str;
