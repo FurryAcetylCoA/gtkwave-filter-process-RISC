@@ -1,4 +1,5 @@
 /***************************************************************************************
+ * Copyright (c) 2024 Jiangjie Weng
  * Copyright (c) 2024 Yanglin Xun
  *
  * GTKWAVE-FILTER-RV is licensed under Mulan PSL v2.
