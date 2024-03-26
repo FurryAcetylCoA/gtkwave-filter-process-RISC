@@ -41,6 +41,7 @@
 #error Please use LLVM with major version >= 11
 #endif
 
+
 using namespace llvm;
 
 static llvm::MCDisassembler *gDisassembler = nullptr;
@@ -103,7 +104,20 @@ std::string disassemble(uint64_t hx) {
     if(gDisassembler->getInstruction(inst, dummy_size, arr, addr, llvm::nulls()) != MCDisassembler::Success){
         os << "invalid inst:" << llvm::format_hex_no_prefix(hx,8);
         return s;
+    }else if(DEBUG_DISPLAY){
+		llvm::errs() << "cursor inst: (HEX)" << llvm::format_hex_no_prefix(hx,8) << " ";
+		llvm::APInt hex_value(64, hx);
+		llvm::errs() << "(BIN)" << toString(hex_value,2,false) <<"\n";
+	}
     }
+
+#ifdef DEBUG_DUMP_INST
+    // Output current instruction in both hex and binary to stderror
+    llvm::APInt hex_value(64, hx);
+    llvm::errs() << "cursor inst: (HEX)" << llvm::format_hex_no_prefix(hx,8) << " ";
+    llvm::errs() << "(BIN)" << toString(hex_value, 2, false) <<"\n";
+#endif // DEBUG_DUMP_INST
+
     gIP->printInst(&inst, addr, "", *gSTI, os);
 
     // Assume result format "\tOpName\tOperands"
