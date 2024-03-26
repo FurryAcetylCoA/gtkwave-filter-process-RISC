@@ -23,22 +23,16 @@
 #include "llvm/MC/MCContext.h"
 #include "llvm/MC/MCDisassembler/MCDisassembler.h"
 #include "llvm/MC/MCInstPrinter.h"
-#if LLVM_VERSION_MAJOR >= 14
 #include "llvm/MC/TargetRegistry.h"
-#if LLVM_VERSION_MAJOR >= 15
 #include "llvm/MC/MCSubtargetInfo.h"
-#endif
-#else
-#include "llvm/Support/TargetRegistry.h"
-#endif
 #include "llvm/Support/TargetSelect.h"
 
 #if defined(__GNUC__) && !defined(__clang__)
 #pragma GCC diagnostic pop
 #endif
 
-#if LLVM_VERSION_MAJOR < 11
-#error Please use LLVM with major version >= 11
+#if LLVM_VERSION_MAJOR < 16
+#error Please use LLVM with major version >= 16
 #endif
 
 
@@ -78,13 +72,9 @@ void init_disasm(std::string triple) {
     gMII = target->createMCInstrInfo();
     gMRI = target->createMCRegInfo(triple);
     auto AsmInfo = target->createMCAsmInfo(*gMRI, triple, MCOptions);
-#if LLVM_VERSION_MAJOR >= 13
     auto llvmTripleTwine = Twine(triple);
     auto llvmtriple = llvm::Triple(llvmTripleTwine);
     auto Ctx = new llvm::MCContext(llvmtriple, AsmInfo, gMRI, nullptr);
-#else
-    auto Ctx = new llvm::MCContext(AsmInfo, gMRI, nullptr);
-#endif
     gDisassembler = target->createMCDisassembler(*gSTI, *Ctx);
     gIP = target->createMCInstPrinter(llvm::Triple(triple),
                                       AsmInfo->getAssemblerDialect(), *AsmInfo,
@@ -104,11 +94,6 @@ std::string disassemble(uint64_t hx) {
     if(gDisassembler->getInstruction(inst, dummy_size, arr, addr, llvm::nulls()) != MCDisassembler::Success){
         os << "invalid inst:" << llvm::format_hex_no_prefix(hx,8);
         return s;
-    }else if(DEBUG_DISPLAY){
-		llvm::errs() << "cursor inst: (HEX)" << llvm::format_hex_no_prefix(hx,8) << " ";
-		llvm::APInt hex_value(64, hx);
-		llvm::errs() << "(BIN)" << toString(hex_value,2,false) <<"\n";
-	}
     }
 
 #ifdef DEBUG_DUMP_INST
