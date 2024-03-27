@@ -1,7 +1,7 @@
 CXX = clang++
 
 CXXFLAGS += $(shell llvm-config --cxxflags) -O3 -flto
-CXXFLAGS += -DDEBUG_DUMP_INST
+# CXXFLAGS += -DDEBUG_DUMP_INST
 LIBS += $(shell llvm-config --libs)
 LDFLAGS += $(shell llvm-config --ldflags)
 LDFLAGS += $(shell if command -v mold --version >/dev/null 2>&1; then echo "-fuse-ld=mold"; fi)
