@@ -81,8 +81,11 @@ void init_disasm(std::string triple) {
                                       AsmInfo->getAssemblerDialect(), *AsmInfo,
                                       *gMII, *gMRI);
     gIP->setPrintImmHex(true);
-    if (isa == "riscv32" || isa == "riscv64")
-        gIP->applyTargetSpecificCLOption("no-aliases");
+    if (isa == "riscv32" || isa == "riscv64"){
+      gIP->applyTargetSpecificCLOption("no-aliases");
+      // gIP->applyTargetSpecificCLOption("numeric"); // Display reg name in numeric format
+    }
+        
 }
 
 std::string disassemble(uint64_t hx) {
