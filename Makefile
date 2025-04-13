@@ -1,4 +1,4 @@
-CXX = clang++
+CXX ?= clang++
 
 CXXFLAGS += $(shell llvm-config --cxxflags) -O3 -flto
 # CXXFLAGS += -DDEBUG_DUMP_INST
